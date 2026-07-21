@@ -2,6 +2,10 @@ package br.com.alura.domain;
 
 public class Abrigo {
 
+    public Abrigo() {
+
+    } //construtor default
+
     public Abrigo(String nome, String telefone, String email) {
         //não precisa passa o ID no construtor, pq é alto gerado pelo BD
         this.nome = nome;
@@ -14,6 +18,7 @@ public class Abrigo {
     private String nome;
     private String telefone;
     private String email;
+    private Pet[] pets;
 
     public Long getId() {
         return id;
@@ -21,6 +26,14 @@ public class Abrigo {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Pet[] getPets() {
+        return pets;
+    }
+
+    public void setPets(Pet[] pets) {
+        this.pets = pets;
     }
 
     public String getNome() {
