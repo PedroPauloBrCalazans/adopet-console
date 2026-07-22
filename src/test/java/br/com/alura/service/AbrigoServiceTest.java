@@ -29,10 +29,10 @@ public class AbrigoServiceTest {
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PrintStream printStream = new PrintStream(baos);
-        System.out.println(printStream);
+        System.out.println(printStream); // as linhas acima pega em um array de bytes as string do expected
 
         when(response.body()).thenReturn("[{"+abrigo.toString()+"}]");
-        when(client.dispararRequisicaoGet(anyString())).thenReturn(response);
+        when(client.dispararRequisicaoGet(anyString())).thenReturn(response); //vai retornar o abrigo.tostring
 
         abrigoService.listarAbrigo();
 
