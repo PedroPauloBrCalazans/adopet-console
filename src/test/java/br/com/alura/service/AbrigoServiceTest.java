@@ -22,14 +22,14 @@ public class AbrigoServiceTest {
     private Abrigo abrigo = new Abrigo("Teste", "61994330908", "abrigo_sf@gmail.com");
 
     @Test
-    public void deveVerificarSeDispararRequisicaoGetSeraChamado() throws IOException, InterruptedException {
+    public void deveVerificarQuandoHaAbrigo() throws IOException, InterruptedException {
         abrigo.setId(0L);
         String expectedAbrigosCadastrados = "Abrigos cadastrados:";
         String expectedIdNome = "0 - Teste";
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PrintStream printStream = new PrintStream(baos);
-        System.out.println(printStream); // as linhas acima pega em um array de bytes as string do expected
+        System.setOut(printStream); // as linhas acima pega em um array de bytes as string do expected
 
         when(response.body()).thenReturn("[{"+abrigo.toString()+"}]");
         when(client.dispararRequisicaoGet(anyString())).thenReturn(response); //vai retornar o abrigo.tostring
@@ -42,5 +42,25 @@ public class AbrigoServiceTest {
 
         Assertions.assertEquals(expectedAbrigosCadastrados, actualAbrigosCadastrados);
         Assertions.assertEquals(expectedIdNome, actualIdENome);
+    }
+
+    @Test
+    public void deveVerificarQuandoNaoHaAbrigo() throws IOException, InterruptedException {
+        abrigo.setId(0L);
+        String expected = "Não há abrigos cadastrados";
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(baos);
+        System.setOut(printStream);
+
+        when(response.body()).thenReturn("[]");
+        when(client.dispararRequisicaoGet(anyString())).thenReturn(response);
+
+        abrigoService.listarAbrigo();
+
+        String[] lines = baos.toString().split(System.lineSeparator());
+        String actual = lines[0];
+
+        Assertions.assertEquals(expected, actual);
     }
 }
