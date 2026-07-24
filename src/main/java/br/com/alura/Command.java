@@ -2,5 +2,8 @@ package br.com.alura;
 
 public interface Command {
 
-    public void execute();
+    void execute();
 }
+
+
+//interface já é public por default
